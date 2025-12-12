@@ -1,0 +1,22 @@
+.app-header {
+    background-color: #0b3d91;
+    color: white;
+}
+
+.app-container {
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #f6f8fb;
+    min-height: calc(100vh - 72px);
+    border-right: 1px solid #e0e3eb;
+}
+
+.nav-link {
+    color: #0b3d91;
+}
+
+.nav-link:hover {
+    color: #062960;
+}
