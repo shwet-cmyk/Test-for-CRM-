@@ -13,4 +13,11 @@ public interface IAuthService
     Task<LoginResultDto> VerifyTwoFactorAsync(TwoFactorRequestDto request);
 
     Task LogoutAsync();
+
+    // 2FA helpers - pass-through to underlying identity gateway
+    Task<string> GenerateAuthenticatorQrAsync(string userId);
+    Task<bool> EnableAuthenticatorAsync(string userId, string verificationCode);
+    Task<IEnumerable<string>> GenerateRecoveryCodesAsync(string userId);
+
+    Task TerminateActiveSessionAsync(string userIdOrEmail);
 }

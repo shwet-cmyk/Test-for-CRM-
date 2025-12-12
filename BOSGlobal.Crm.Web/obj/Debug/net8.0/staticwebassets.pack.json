@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/js/recaptcha.js",
+      "PackagePath": "staticwebassets/js/recaptcha.js"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.BOSGlobal.Crm.Web.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.BOSGlobal.Crm.Web.props",
+      "PackagePath": "build\\BOSGlobal.Crm.Web.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.BOSGlobal.Crm.Web.props",
+      "PackagePath": "buildMultiTargeting\\BOSGlobal.Crm.Web.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.BOSGlobal.Crm.Web.props",
+      "PackagePath": "buildTransitive\\BOSGlobal.Crm.Web.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

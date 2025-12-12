@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/BOSGlobal.Crm.Web.props" />
+</Project>

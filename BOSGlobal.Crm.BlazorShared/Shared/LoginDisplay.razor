@@ -1,0 +1,22 @@
+@using System.Security.Claims
+
+
+<AuthorizeView>
+    <Authorized Context="authState">
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-white">@GetEmail(authState)</span>
+            <a class="btn btn-sm btn-outline-light" href="Identity/Account/Logout">Logout</a>
+        </div>
+    </Authorized>
+
+    <NotAuthorized>
+        <a class="btn btn-sm btn-outline-light" href="/login">Login</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private static string GetEmail(AuthenticationState authState)
+        => authState.User.FindFirstValue(ClaimTypes.Email)
+           ?? authState.User.Identity?.Name
+           ?? "User";
+}

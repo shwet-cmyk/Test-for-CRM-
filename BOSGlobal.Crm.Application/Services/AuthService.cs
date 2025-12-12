@@ -71,4 +71,24 @@ public class AuthService : IAuthService
     {
         return _identityGateway.VerifyTwoFactorAsync(request);
     }
+
+    public Task<string> GenerateAuthenticatorQrAsync(string userId)
+    {
+        return _identityGateway.GenerateAuthenticatorQrAsync(userId);
+    }
+
+    public Task<bool> EnableAuthenticatorAsync(string userId, string verificationCode)
+    {
+        return _identityGateway.EnableAuthenticatorAsync(userId, verificationCode);
+    }
+
+    public Task<IEnumerable<string>> GenerateRecoveryCodesAsync(string userId)
+    {
+        return _identityGateway.GenerateRecoveryCodesAsync(userId);
+    }
+
+    public Task TerminateActiveSessionAsync(string userIdOrEmail)
+    {
+        return _identityGateway.TerminateActiveSessionAsync(userIdOrEmail);
+    }
 }

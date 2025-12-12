@@ -3,7 +3,9 @@ namespace BOSGlobal.Crm.Domain.Enums;
 public enum UserRole
 {
     Admin,
-    Sales,
     Manager,
+    SalesExecutive,
+    Telecaller,
+    Marketing,
     Support
 }

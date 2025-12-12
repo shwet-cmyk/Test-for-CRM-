@@ -11,4 +11,9 @@ public class ApplicationUser : IdentityUser
 
     // GST number (optional)
     public string? GstNumber { get; set; }
+    
+    // Session management to support single-active-session enforcement
+    public string? SessionId { get; set; }
+    public DateTime? SessionExpiresUtc { get; set; }
+    public DateTime? LastActivityUtc { get; set; }
 }

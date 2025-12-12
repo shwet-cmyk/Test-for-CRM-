@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/BOSGlobal.Crm.Web.props" />
+</Project>

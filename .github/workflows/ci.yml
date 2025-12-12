@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, 'feature/*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore BOSGlobal.Crm.sln
+      - name: Build
+        run: dotnet build BOSGlobal.Crm.sln --no-restore --configuration Debug
+
+  # Note: Building MAUI for Android/iOS requires platform SDKs and specific runners (macOS for iOS/macCatalyst).
+  # The following job is a placeholder and will only run if runners with MAUI workloads are available.
+  build-maui:
+    runs-on: macos-latest
+    # Enabled: build MAUI on macOS runners. NOTE: Ensure the selected runner has the MAUI workload
+    # or allow the workflow permission to run `dotnet workload install maui` which can be slow.
+    # If you don't want this to run on every push, add an appropriate `if:` condition.
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install workloads (may be slow)
+        run: |
+          # Ensure required workloads are installed on the macOS runner
+          dotnet workload install maui
+      - name: Restore
+        run: dotnet restore BOSGlobal.Crm.Maui/BOSGlobal.Crm.Maui.csproj
+      - name: Build MAUI
+        run: dotnet build BOSGlobal.Crm.Maui/BOSGlobal.Crm.Maui.csproj --configuration Release

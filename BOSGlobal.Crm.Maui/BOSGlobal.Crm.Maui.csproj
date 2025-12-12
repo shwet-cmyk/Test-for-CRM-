@@ -12,4 +12,7 @@
     <PackageReference Include="Microsoft.Maui" Version="8.0.57" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="8.0.8" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../BOSGlobal.Crm.BlazorShared/BOSGlobal.Crm.BlazorShared.csproj" />
+  </ItemGroup>
 </Project>

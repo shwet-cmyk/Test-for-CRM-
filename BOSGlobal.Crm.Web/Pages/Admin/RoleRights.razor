@@ -1,0 +1,76 @@
+@page "/admin/rolerights"
+@attribute [Authorize(Roles = "Admin")]
+@inject BOSGlobal.Crm.Application.Interfaces.IRoleRightsRepository RoleRightsRepo
+
+<h3>Role Rights</h3>
+
+<div class="mb-3">
+    <label for="roleSelect">Select Role</label>
+    <select id="roleSelect" class="form-select" @onchange="OnRoleChanged">
+        @foreach (var r in Roles)
+        {
+            <option value="@r.Id">@r.Name</option>
+        }
+    </select>
+</div>
+
+@if (SelectedRole != null)
+{
+    <h4>Permissions for @SelectedRole.Name</h4>
+    @foreach (var p in PermissionKeys)
+    {
+        var checkedVal = Rights.TryGetValue(p, out var v) && v;
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="@p" checked="@checkedVal" @onchange="(e) => TogglePermission(p, ((ChangeEventArgs)e).Value)" />
+            <label class="form-check-label" for="@p">@p</label>
+        </div>
+    }
+}
+
+@code {
+    private List<BOSGlobal.Crm.Domain.Entities.RoleMaster> Roles = new();
+    private BOSGlobal.Crm.Domain.Entities.RoleMaster? SelectedRole;
+    private Dictionary<string, bool> Rights = new();
+
+    // example permission keys — extend as required
+    private readonly string[] PermissionKeys = new[] { "ViewDashboard", "AddEditLead", "DeleteLead", "AssignLead", "ManageUsers", "ViewReports" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        Roles = (await RoleRightsRepo.GetAllRolesAsync()).ToList();
+        if (Roles.Any())
+        {
+            SelectedRole = Roles.First();
+            await LoadRights();
+        }
+    }
+
+    private async Task OnRoleChanged(ChangeEventArgs e)
+    {
+        var id = int.Parse(e.Value?.ToString() ?? "0");
+        SelectedRole = Roles.FirstOrDefault(r => r.Id == id);
+        await LoadRights();
+    }
+
+    private async Task LoadRights()
+    {
+        Rights.Clear();
+        if (SelectedRole == null) return;
+        var rights = await RoleRightsRepo.GetRightsForRoleAsync(SelectedRole.Id);
+        foreach (var pk in PermissionKeys)
+        {
+            Rights[pk] = rights.Any(r => r.PermissionKey == pk && r.IsAllowed);
+        }
+        StateHasChanged();
+    }
+
+    private async Task TogglePermission(string permissionKey, object? rawValue)
+    {
+        if (SelectedRole == null) return;
+        // rawValue is "on" when checkbox checked in certain browsers; we just toggle based on existing value
+        var current = Rights.TryGetValue(permissionKey, out var v) && v;
+        var newVal = !current;
+        await RoleRightsRepo.SetRightAsync(SelectedRole.Id, permissionKey, newVal);
+        Rights[permissionKey] = newVal;
+    }
+}

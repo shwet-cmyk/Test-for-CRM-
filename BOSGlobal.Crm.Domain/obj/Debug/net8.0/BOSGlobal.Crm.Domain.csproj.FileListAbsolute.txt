@@ -1,0 +1,12 @@
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/bin/Debug/net8.0/BOSGlobal.Crm.Domain.deps.json
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/bin/Debug/net8.0/BOSGlobal.Crm.Domain.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/bin/Debug/net8.0/BOSGlobal.Crm.Domain.pdb
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.AssemblyInfoInputs.cache
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.AssemblyInfo.cs
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.csproj.CoreCompileInputs.cache
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.sourcelink.json
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/refint/BOSGlobal.Crm.Domain.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/BOSGlobal.Crm.Domain.pdb
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Domain/obj/Debug/net8.0/ref/BOSGlobal.Crm.Domain.dll
