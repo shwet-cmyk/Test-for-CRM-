@@ -1,0 +1,87 @@
+@page "/twofactor-setup"
+@using System.Security.Claims
+@inject BOSGlobal.Crm.Application.Interfaces.IAuthService AuthService
+@inject Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider AuthStateProvider
+
+<h3>Two-factor authenticator setup</h3>
+
+@if (loading)
+{
+    <p>Loading...</p>
+}
+else if (!string.IsNullOrEmpty(qrData))
+{
+    <p>Scan this QR with your authenticator app, then enter the verification code below to enable.</p>
+    <img src="@qrData" alt="Authenticator QR" />
+
+    <div class="mb-2">
+        <label>Code from app</label>
+        <input @bind="code" class="form-control" />
+    </div>
+    <button class="btn btn-primary" @onclick="Enable">Enable authenticator</button>
+
+    @if (recoveryCodes?.Any() == true)
+    {
+        <h4>Recovery codes</h4>
+        <ul>
+            @foreach (var c in recoveryCodes)
+            {
+                <li>@c</li>
+            }
+        </ul>
+    }
+}
+else
+{
+    <p>Unable to generate authenticator QR. Are you logged in?</p>
+}
+
+@code {
+    private bool loading = true;
+    private string? qrData;
+    private string code = string.Empty;
+    private IEnumerable<string>? recoveryCodes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = auth.User;
+        if (user?.Identity?.IsAuthenticated != true)
+        {
+            loading = false;
+            return;
+        }
+
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            loading = false;
+            return;
+        }
+
+        try
+        {
+            qrData = await AuthService.GenerateAuthenticatorQrAsync(userId);
+        }
+        catch
+        {
+            qrData = null;
+        }
+
+        loading = false;
+    }
+
+    private async Task Enable()
+    {
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = auth.User;
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId)) return;
+
+        var ok = await AuthService.EnableAuthenticatorAsync(userId, code);
+        if (ok)
+        {
+            recoveryCodes = await AuthService.GenerateRecoveryCodesAsync(userId);
+        }
+    }
+}

@@ -1,0 +1,16 @@
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/bin/Debug/net8.0/BOSGlobal.Crm.Application.deps.json
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/bin/Debug/net8.0/BOSGlobal.Crm.Application.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/bin/Debug/net8.0/BOSGlobal.Crm.Application.pdb
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/bin/Debug/net8.0/BOSGlobal.Crm.Domain.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/bin/Debug/net8.0/BOSGlobal.Crm.Domain.pdb
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.csproj.AssemblyReference.cache
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.AssemblyInfoInputs.cache
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.AssemblyInfo.cs
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.csproj.CoreCompileInputs.cache
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.sourcelink.json
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGloba.3F1153B0.Up2Date
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/refint/BOSGlobal.Crm.Application.dll
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/BOSGlobal.Crm.Application.pdb
+/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Application/obj/Debug/net8.0/ref/BOSGlobal.Crm.Application.dll

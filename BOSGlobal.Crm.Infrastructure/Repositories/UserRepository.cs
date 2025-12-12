@@ -50,7 +50,11 @@ public class UserRepository : IUserRepository
         {
             Id = identityUser.Id,
             Email = identityUser.Email ?? string.Empty,
-            IsActive = identityUser.IsActive
+            IsActive = identityUser.IsActive,
+            ErpId = identityUser.ErpId,
+            GstNumber = identityUser.GstNumber,
+            PhoneNumber = identityUser.PhoneNumber,
+            PhoneNumberConfirmed = identityUser.PhoneNumberConfirmed
         };
     }
 }

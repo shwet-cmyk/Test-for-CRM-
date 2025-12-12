@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "21+0pTUFTErfoe2bDwgzQNng08yzEBRu9ASVreK3U/o=",
+  "Source": "BOSGlobal.Crm.Web",
+  "BasePath": "_content/BOSGlobal.Crm.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "BOSGlobal.Crm.Web/wwwroot",
+      "Source": "BOSGlobal.Crm.Web",
+      "ContentRoot": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/",
+      "BasePath": "_content/BOSGlobal.Crm.Web",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/css/site.css",
+      "SourceId": "BOSGlobal.Crm.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/",
+      "BasePath": "_content/BOSGlobal.Crm.Web",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/js/recaptcha.js",
+      "SourceId": "BOSGlobal.Crm.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/shwet/Documents/GitHub/Test-for-CRM-/BOSGlobal.Crm.Web/wwwroot/",
+      "BasePath": "_content/BOSGlobal.Crm.Web",
+      "RelativePath": "js/recaptcha.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/recaptcha.js"
+    }
+  ]
+}
