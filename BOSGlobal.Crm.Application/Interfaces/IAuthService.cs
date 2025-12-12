@@ -6,5 +6,11 @@ public interface IAuthService
 {
     Task<LoginResultDto> LoginAsync(LoginRequestDto request);
 
+    Task<LoginResultDto> RegisterAsync(RegisterRequestDto request);
+
+    Task<LoginResultDto> VerifyPhoneOtpAsync(string email, string code);
+
+    Task<LoginResultDto> VerifyTwoFactorAsync(TwoFactorRequestDto request);
+
     Task LogoutAsync();
 }

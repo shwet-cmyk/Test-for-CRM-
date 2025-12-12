@@ -1,28 +1,22 @@
-@inject IAuthService AuthService
-@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Components.Authorization
 @using System.Security.Claims
 
-<AuthorizeView Context="authState">
-    <Authorized>
+<AuthorizeView>
+    <Authorized Context="authState">
         <div class="d-flex align-items-center gap-2">
-            <span class="text-white">@GetEmail(authState.User)</span>
-            <button class="btn btn-sm btn-outline-light" @onclick="Logout">Logout</button>
+            <span class="text-white">@GetEmail(authState)</span>
+            <a class="btn btn-sm btn-outline-light" href="Identity/Account/Logout">Logout</a>
         </div>
     </Authorized>
+
     <NotAuthorized>
         <a class="btn btn-sm btn-outline-light" href="/login">Login</a>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
-    private async Task Logout()
-    {
-        await AuthService.LogoutAsync();
-        Navigation.NavigateTo("/login", true);
-    }
-
-    private static string GetEmail(ClaimsPrincipal user)
-    {
-        return user.FindFirstValue(ClaimTypes.Email) ?? user.Identity?.Name ?? "User";
-    }
+    private static string GetEmail(AuthenticationState authState)
+        => authState.User.FindFirstValue(ClaimTypes.Email)
+           ?? authState.User.Identity?.Name
+           ?? "User";
 }

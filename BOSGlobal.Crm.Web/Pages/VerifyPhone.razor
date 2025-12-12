@@ -1,0 +1,57 @@
+@page "/verify-phone"
+@attribute [AllowAnonymous]
+@inject IAuthService AuthService
+@inject NavigationManager Navigation
+
+<PageTitle>Verify Phone</PageTitle>
+
+<h3>Verify phone number</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
+<EditForm Model="Model" OnValidSubmit="HandleVerifyAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText @bind-Value="Model.Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">OTP</label>
+        <InputText @bind-Value="Model.Code" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Verify</button>
+</EditForm>
+
+@code {
+    private VerifyPhoneModel Model { get; set; } = new();
+    private string? Message { get; set; }
+
+    private class VerifyPhoneModel
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+    }
+
+    private async Task HandleVerifyAsync()
+    {
+        Message = null;
+        var result = await AuthService.VerifyPhoneOtpAsync(Model.Email, Model.Code);
+        if (result.Success)
+        {
+            Message = "Phone verified successfully.";
+            // optionally redirect
+            Navigation.NavigateTo("/", true);
+        }
+        else
+        {
+            Message = result.ErrorMessage ?? "Verification failed.";
+        }
+    }
+}

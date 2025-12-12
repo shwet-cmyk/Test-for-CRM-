@@ -12,4 +12,7 @@ public class LoginRequestDto
     public string Password { get; set; } = string.Empty;
 
     public bool RememberMe { get; set; }
+
+    // reCAPTCHA token provided by client (optional in dev)
+    public string? RecaptchaToken { get; set; }
 }

@@ -31,9 +31,11 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IIdentityGateway, IdentityGateway>();
+    services.AddMemoryCache();
+    services.AddSingleton<BOSGlobal.Crm.Application.Interfaces.IPhoneOtpService, InMemoryPhoneOtpService>();
+    // reCAPTCHA verification service
+    services.AddHttpClient<BOSGlobal.Crm.Application.Interfaces.IRecaptchaService, RecaptchaService>();
         services.AddScoped<DbInitializer>();
-
-        services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 
         return services;
     }

@@ -1,0 +1,87 @@
+@page "/register"
+@attribute [AllowAnonymous]
+@inject IAuthService AuthService
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+@inject IConfiguration Configuration
+
+<PageTitle>Register</PageTitle>
+
+<h3>Create an account</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
+<EditForm Model="RegisterModel" OnValidSubmit="HandleRegisterAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <InputText @bind-Value="RegisterModel.Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <InputText @bind-Value="RegisterModel.Password" type="password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Confirm password</label>
+        <InputText @bind-Value="RegisterModel.ConfirmPassword" type="password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone number</label>
+        <InputText @bind-Value="RegisterModel.PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">ERP ID</label>
+        <InputText @bind-Value="RegisterModel.ErpId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">GST number</label>
+        <InputText @bind-Value="RegisterModel.GstNumber" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+</EditForm>
+
+@code {
+    private RegisterRequestDto RegisterModel { get; set; } = new();
+    private string? ErrorMessage { get; set; }
+
+    private async Task HandleRegisterAsync()
+    {
+        ErrorMessage = null;
+        // get recaptcha token if site key configured
+        var siteKey = Configuration["Recaptcha:SiteKey"];
+        if (!string.IsNullOrWhiteSpace(siteKey))
+        {
+            try
+            {
+                var token = await JS.InvokeAsync<string>("recaptcha.executeRecaptcha", siteKey);
+                RegisterModel.RecaptchaToken = token;
+            }
+            catch
+            {
+                // ignore, server will validate
+            }
+        }
+
+        var result = await AuthService.RegisterAsync(RegisterModel);
+        if (result.Success)
+        {
+            // After registration we'll navigate to home for now.
+            Navigation.NavigateTo("/", true);
+        }
+        else
+        {
+            ErrorMessage = result.ErrorMessage ?? "Registration failed.";
+        }
+    }
+}

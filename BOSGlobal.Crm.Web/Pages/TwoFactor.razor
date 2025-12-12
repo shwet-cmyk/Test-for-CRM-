@@ -1,0 +1,68 @@
+@page "/twofactor"
+@attribute [AllowAnonymous]
+@inject IAuthService AuthService
+@inject NavigationManager Navigation
+
+<PageTitle>Two-Factor Authentication</PageTitle>
+
+<h3>Enter 2FA code</h3>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-info">@Message</div>
+}
+
+<EditForm Model="Model" OnValidSubmit="Handle2FaAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label class="form-label">Code</label>
+        <InputText @bind-Value="Model.Code" class="form-control" />
+    </div>
+
+    <div class="mb-3 form-check">
+        <InputCheckbox @bind-Value="Model.RememberMe" class="form-check-input" />
+        <label class="form-check-label">Remember me</label>
+    </div>
+
+    <div class="mb-3 form-check">
+        <InputCheckbox @bind-Value="Model.RememberClient" class="form-check-input" />
+        <label class="form-check-label">Remember this browser</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Verify</button>
+</EditForm>
+
+@code {
+    private TwoFactorModel Model { get; set; } = new();
+    private string? Message { get; set; }
+
+    private class TwoFactorModel
+    {
+        public string Code { get; set; } = string.Empty;
+        public bool RememberMe { get; set; }
+        public bool RememberClient { get; set; }
+    }
+
+    private async Task Handle2FaAsync()
+    {
+        Message = null;
+        var dto = new BOSGlobal.Crm.Application.DTOs.TwoFactorRequestDto
+        {
+            Code = Model.Code,
+            RememberMe = Model.RememberMe,
+            RememberClient = Model.RememberClient
+        };
+
+        var result = await AuthService.VerifyTwoFactorAsync(dto);
+        if (result.Success)
+        {
+            Navigation.NavigateTo("/", true);
+        }
+        else
+        {
+            Message = result.ErrorMessage ?? "Invalid code.";
+        }
+    }
+}

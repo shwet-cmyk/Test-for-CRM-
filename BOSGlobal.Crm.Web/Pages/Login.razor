@@ -1,6 +1,8 @@
 @page "/login"
 @attribute [AllowAnonymous]
 @inject IAuthService AuthService
+@inject IJSRuntime JS
+@inject IConfiguration Configuration
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
@@ -48,10 +50,30 @@
     private async Task HandleLoginAsync()
     {
         ErrorMessage = null;
+        // if recaptcha site key configured, execute on client to get token
+        var siteKey = Configuration["Recaptcha:SiteKey"];
+        if (!string.IsNullOrWhiteSpace(siteKey))
+        {
+            try
+            {
+                var token = await JS.InvokeAsync<string>("recaptcha.executeRecaptcha", siteKey);
+                LoginModel.RecaptchaToken = token;
+            }
+            catch
+            {
+                // ignore and let server-side fail if necessary
+            }
+        }
+
         var result = await AuthService.LoginAsync(LoginModel);
         if (result.Success)
         {
             Navigation.NavigateTo("/", true);
+        }
+        else if (result.RequiresTwoFactor)
+        {
+            // redirect to 2FA page
+            Navigation.NavigateTo("/twofactor");
         }
         else
         {
