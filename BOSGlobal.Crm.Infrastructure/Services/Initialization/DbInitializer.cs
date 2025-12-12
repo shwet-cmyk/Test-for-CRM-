@@ -30,6 +30,16 @@ public class DbInitializer
             }
         }
 
+        // ensure RoleMaster table has the same canonical roles for business logic and permissions
+        foreach (var role in Enum.GetNames(typeof(UserRole)))
+        {
+            if (!await _context.RoleMasters!.AnyAsync(r => r.Name == role))
+            {
+                _context.RoleMasters.Add(new BOSGlobal.Crm.Domain.Entities.RoleMaster { Name = role });
+            }
+        }
+        await _context.SaveChangesAsync();
+
         const string adminEmail = "admin@crm.local";
         const string adminPassword = "Admin@123";
         var adminUser = await _userManager.FindByEmailAsync(adminEmail);

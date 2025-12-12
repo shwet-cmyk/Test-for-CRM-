@@ -12,9 +12,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Twilio" Version="5.84.0" />
+    <PackageReference Include="QRCoder" Version="1.5.1" />
   </ItemGroup>
-  <ItemGroup>
+    <ItemGroup>
     <ProjectReference Include="../BOSGlobal.Crm.Domain/BOSGlobal.Crm.Domain.csproj" />
     <ProjectReference Include="../BOSGlobal.Crm.Application/BOSGlobal.Crm.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>

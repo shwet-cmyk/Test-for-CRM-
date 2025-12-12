@@ -15,10 +15,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - name: Restore
-        run: dotnet restore BOSGlobal.Crm.sln
-      - name: Build
-        run: dotnet build BOSGlobal.Crm.sln --no-restore --configuration Debug
+      - name: Restore Web
+        run: dotnet restore BOSGlobal.Crm.Web/BOSGlobal.Crm.Web.csproj
+      - name: Build Web
+        run: dotnet build BOSGlobal.Crm.Web/BOSGlobal.Crm.Web.csproj --no-restore --configuration Debug
 
   # Note: Building MAUI for Android/iOS requires platform SDKs and specific runners (macOS for iOS/macCatalyst).
   # The following job is a placeholder and will only run if runners with MAUI workloads are available.
