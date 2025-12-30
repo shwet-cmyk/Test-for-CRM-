@@ -1,8 +1,6 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using BOSGlobal.Crm.Infrastructure.Identity;
 
 namespace BOSGlobal.Crm.Infrastructure.Services;
@@ -37,16 +35,27 @@ public class SessionValidationMiddleware
                 }
                 else
                 {
-                    // if session ids mismatch -> sign out
-                    if (!string.Equals(user.SessionId ?? string.Empty, sessionClaim ?? string.Empty, StringComparison.Ordinal))
+                    var storedSessionId = user.SessionId ?? string.Empty;
+                    var claimedSessionId = sessionClaim ?? string.Empty;
+
+                    // if session ids mismatch or missing -> sign out
+                    if (string.IsNullOrEmpty(storedSessionId) ||
+                        string.IsNullOrEmpty(claimedSessionId) ||
+                        !string.Equals(storedSessionId, claimedSessionId, StringComparison.Ordinal))
+                    {
+                        await signInManager.SignOutAsync();
+                    }
+                    // if session has expired -> sign out
+                    else if (user.SessionExpiresUtc.HasValue && user.SessionExpiresUtc.Value <= DateTime.UtcNow)
                     {
                         await signInManager.SignOutAsync();
                     }
                     else
                     {
                         // update last activity and extend session expiry (sliding)
-                        user.LastActivityUtc = DateTime.UtcNow;
-                        user.SessionExpiresUtc = DateTime.UtcNow.AddMinutes(10);
+                        var now = DateTime.UtcNow;
+                        user.LastActivityUtc = now;
+                        user.SessionExpiresUtc = now.AddMinutes(10);
                         await userManager.UpdateAsync(user);
                     }
                 }
