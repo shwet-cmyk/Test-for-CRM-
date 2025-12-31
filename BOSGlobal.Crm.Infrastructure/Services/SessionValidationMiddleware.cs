@@ -37,6 +37,13 @@ public class SessionValidationMiddleware
                 }
                 else
                 {
+                    if (user.SessionExpiresUtc.HasValue && user.SessionExpiresUtc.Value <= DateTime.UtcNow)
+                    {
+                        await signInManager.SignOutAsync();
+                        await _next(context);
+                        return;
+                    }
+
                     // if session ids mismatch -> sign out
                     if (!string.Equals(user.SessionId ?? string.Empty, sessionClaim ?? string.Empty, StringComparison.Ordinal))
                     {
@@ -46,7 +53,7 @@ public class SessionValidationMiddleware
                     {
                         // update last activity and extend session expiry (sliding)
                         user.LastActivityUtc = DateTime.UtcNow;
-                        user.SessionExpiresUtc = DateTime.UtcNow.AddMinutes(10);
+                        user.SessionExpiresUtc = DateTime.UtcNow.AddMinutes(30);
                         await userManager.UpdateAsync(user);
                     }
                 }

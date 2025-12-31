@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using BOSGlobal.Crm.Application.DTOs;
 using BOSGlobal.Crm.Application.Interfaces;
 using BOSGlobal.Crm.Infrastructure.Identity;
@@ -16,14 +15,16 @@ public class IdentityGateway : IIdentityGateway
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly BOSGlobal.Crm.Application.Interfaces.IPhoneOtpService _otpService;
     private readonly BOSGlobal.Crm.Application.Interfaces.ILoginAuditRepository _auditRepository;
+    private readonly IRoleAccessService _roleAccessService;
         
 
-    public IdentityGateway(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, BOSGlobal.Crm.Application.Interfaces.IPhoneOtpService otpService, BOSGlobal.Crm.Application.Interfaces.ILoginAuditRepository auditRepository)
+    public IdentityGateway(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, BOSGlobal.Crm.Application.Interfaces.IPhoneOtpService otpService, BOSGlobal.Crm.Application.Interfaces.ILoginAuditRepository auditRepository, IRoleAccessService roleAccessService)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _otpService = otpService;
         _auditRepository = auditRepository;
+        _roleAccessService = roleAccessService;
     }
 
     public async Task<LoginResultDto> LoginAsync(LoginRequestDto request)
@@ -52,7 +53,7 @@ public class IdentityGateway : IIdentityGateway
             // create a new session id and persist to user before issuing final cookie
             var sessionId = Guid.NewGuid().ToString("N");
             user.SessionId = sessionId;
-            user.SessionExpiresUtc = DateTime.UtcNow.AddMinutes(10); // session TTL
+            user.SessionExpiresUtc = DateTime.UtcNow.AddMinutes(30); // session TTL
             user.LastActivityUtc = DateTime.UtcNow;
             await _userManager.UpdateAsync(user);
 
@@ -67,8 +68,14 @@ public class IdentityGateway : IIdentityGateway
             catch { }
 
             var roles = await _userManager.GetRolesAsync(user);
-            var redirect = GetRedirectForRoles(roles);
-            return new LoginResultDto { Success = true, Roles = roles, RedirectUrl = redirect };
+            var accessProfile = await _roleAccessService.BuildAccessProfileAsync(user.Id);
+            if (!accessProfile.HasAssignedRole)
+            {
+                return new LoginResultDto { Success = false, ErrorMessage = accessProfile.ErrorMessage, ErrorCode = "RoleMissing" };
+            }
+
+            var redirect = accessProfile.DashboardPath ?? GetRedirectForRoles(roles);
+            return new LoginResultDto { Success = true, Roles = accessProfile.Roles, RedirectUrl = redirect, AccessProfile = accessProfile };
         }
         if (result.RequiresTwoFactor)
         {
