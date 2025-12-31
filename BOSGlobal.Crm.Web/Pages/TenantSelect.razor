@@ -1,0 +1,65 @@
+@page "/tenant-select"
+@attribute [Authorize]
+@inject BOSGlobal.Crm.Application.Interfaces.IAuthService AuthService
+@inject NavigationManager Navigation
+
+<PageTitle>Select Tenant</PageTitle>
+
+<h3>Choose a tenant</h3>
+
+@if (tenants is null)
+{
+    <p>Loading tenants...</p>
+}
+else if (!tenants.Any())
+{
+    <div class="alert alert-warning">No tenants available.</div>
+}
+else
+{
+    <EditForm OnValidSubmit="HandleSwitch">
+        <InputSelect @bind-Value="selectedTenantId" class="form-select">
+            @foreach (var tenant in tenants)
+            {
+                <option value="@tenant.Id">@tenant.Name (@tenant.Realm)</option>
+            }
+        </InputSelect>
+        <button class="btn btn-primary mt-3" type="submit">Switch</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div class="alert alert-info mt-3">@message</div>
+    }
+}
+
+@code {
+    private IEnumerable<BOSGlobal.Crm.Application.DTOs.TenantSummaryDto>? tenants;
+    private Guid selectedTenantId;
+    private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tenants = await AuthService.GetTenantsForCurrentUserAsync();
+        selectedTenantId = tenants.FirstOrDefault()?.Id ?? Guid.Empty;
+    }
+
+    private async Task HandleSwitch()
+    {
+        if (selectedTenantId == Guid.Empty)
+        {
+            message = "Select a tenant.";
+            return;
+        }
+
+        var result = await AuthService.SwitchTenantAsync(selectedTenantId);
+        if (result.Success)
+        {
+            Navigation.NavigateTo(result.RedirectUrl ?? "/apps", true);
+        }
+        else
+        {
+            message = result.ErrorMessage ?? "Unable to switch tenant.";
+        }
+    }
+}

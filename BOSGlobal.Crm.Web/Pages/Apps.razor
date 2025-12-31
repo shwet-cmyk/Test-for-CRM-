@@ -1,0 +1,51 @@
+@page "/apps"
+@attribute [Authorize]
+@inject BOSGlobal.Crm.Application.Interfaces.IModuleAccessService ModuleAccessService
+@inject BOSGlobal.Crm.Application.Interfaces.ITenantContext TenantContext
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>Applications</PageTitle>
+
+<h3>App Launcher</h3>
+
+@if (modules is null)
+{
+    <p>Loading modules...</p>
+}
+else if (!modules.Any())
+{
+    <div class="alert alert-warning">No modules are entitled for this tenant.</div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var module in modules)
+        {
+            <div class="col-12 col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@module.Name</h5>
+                        <p class="card-text">@module.Description</p>
+                        <a class="btn btn-primary" href="@($"/{module.Key.ToLowerInvariant()}")">Open</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<BOSGlobal.Crm.Application.DTOs.ModuleDto>? modules;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = auth.User;
+        if (user?.Identity?.IsAuthenticated != true || TenantContext.TenantId is null)
+        {
+            return;
+        }
+
+        modules = await ModuleAccessService.GetModulesForUserAsync(user.FindFirstValue(ClaimTypes.NameIdentifier)!, TenantContext.TenantId.Value);
+    }
+}

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../BOSGlobal.Crm.Infrastructure/BOSGlobal.Crm.Infrastructure.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Core.Infrastructure/BOSGlobal.Crm.Core.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

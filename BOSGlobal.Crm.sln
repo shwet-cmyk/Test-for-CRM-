@@ -2,13 +2,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Domain", "BOSGlobal.Crm.Domain/BOSGlobal.Crm.Domain.csproj", "{FC62865B-8793-43FE-B110-F368B3C7CCC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Core.Domain", "BOSGlobal.Crm.Core.Domain/BOSGlobal.Crm.Core.Domain.csproj", "{FC62865B-8793-43FE-B110-F368B3C7CCC3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Application", "BOSGlobal.Crm.Application/BOSGlobal.Crm.Application.csproj", "{CFDC0E54-362A-4D45-B83E-3F3159C62FB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Core.Application", "BOSGlobal.Crm.Core.Application/BOSGlobal.Crm.Core.Application.csproj", "{CFDC0E54-362A-4D45-B83E-3F3159C62FB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Infrastructure", "BOSGlobal.Crm.Infrastructure/BOSGlobal.Crm.Infrastructure.csproj", "{C2EF986B-EA96-4844-A5ED-E44DAF141B92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Core.Infrastructure", "BOSGlobal.Crm.Core.Infrastructure/BOSGlobal.Crm.Core.Infrastructure.csproj", "{C2EF986B-EA96-4844-A5ED-E44DAF141B92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Web", "BOSGlobal.Crm.Web/BOSGlobal.Crm.Web.csproj", "{57342A7E-8B17-4C92-8F19-B1C94743909C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Contracts", "BOSGlobal.Crm.Contracts/BOSGlobal.Crm.Contracts.csproj", "{99C088C4-9883-4542-995F-5D98DC83B2F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOSGlobal.Crm.Permissions", "BOSGlobal.Crm.Permissions/BOSGlobal.Crm.Permissions.csproj", "{B3673064-A316-4E42-A13F-45A6354C94FE}"
 EndProject
 Global
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,14 @@ GlobalSection(ProjectConfigurationPlatforms) = postSolution
 {57342A7E-8B17-4C92-8F19-B1C94743909C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 {57342A7E-8B17-4C92-8F19-B1C94743909C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 {57342A7E-8B17-4C92-8F19-B1C94743909C}.Release|Any CPU.Build.0 = Release|Any CPU
+{99C088C4-9883-4542-995F-5D98DC83B2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{99C088C4-9883-4542-995F-5D98DC83B2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{99C088C4-9883-4542-995F-5D98DC83B2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{99C088C4-9883-4542-995F-5D98DC83B2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+{B3673064-A316-4E42-A13F-45A6354C94FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{B3673064-A316-4E42-A13F-45A6354C94FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{B3673064-A316-4E42-A13F-45A6354C94FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{B3673064-A316-4E42-A13F-45A6354C94FE}.Release|Any CPU.Build.0 = Release|Any CPU
 EndGlobalSection
 GlobalSection(SolutionProperties) = preSolution
 HideSolutionNode = FALSE

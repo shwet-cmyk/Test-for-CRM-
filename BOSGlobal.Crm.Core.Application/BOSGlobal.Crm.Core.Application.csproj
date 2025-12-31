@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>BOSGlobal.Crm.Application</AssemblyName>
+    <RootNamespace>BOSGlobal.Crm.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../BOSGlobal.Crm.Core.Domain/BOSGlobal.Crm.Core.Domain.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Contracts/BOSGlobal.Crm.Contracts.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Permissions/BOSGlobal.Crm.Permissions.csproj" />
+  </ItemGroup>
+</Project>

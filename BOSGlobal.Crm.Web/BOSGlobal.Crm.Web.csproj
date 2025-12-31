@@ -5,8 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../BOSGlobal.Crm.Application/BOSGlobal.Crm.Application.csproj" />
-    <ProjectReference Include="../BOSGlobal.Crm.Infrastructure/BOSGlobal.Crm.Infrastructure.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Core.Application/BOSGlobal.Crm.Core.Application.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Core.Infrastructure/BOSGlobal.Crm.Core.Infrastructure.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Contracts/BOSGlobal.Crm.Contracts.csproj" />
+    <ProjectReference Include="../BOSGlobal.Crm.Permissions/BOSGlobal.Crm.Permissions.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8" />
