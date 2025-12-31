@@ -2,6 +2,7 @@ using BOSGlobal.Crm.Application.Interfaces;
 using BOSGlobal.Crm.Application.Services;
 using BOSGlobal.Crm.Infrastructure.Services;
 using BOSGlobal.Crm.Infrastructure.Services.Initialization;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +12,14 @@ var erpConnection = builder.Configuration.GetConnectionString("ErpConnection");
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAuthorizationCore();
-// Configure cookie options: 10 minute inactivity session as requested in UI text
+builder.Services.AddControllers().AddJsonOptions(opts =>
+{
+    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+// Configure cookie options: 30 minute inactivity session
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.SlidingExpiration = true;
 });
 
@@ -47,6 +52,7 @@ app.UseAuthorization();
 // Validate sessions on each request (single-active-session enforcement)
 app.UseMiddleware<BOSGlobal.Crm.Infrastructure.Services.SessionValidationMiddleware>();
 
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

@@ -16,6 +16,7 @@ public class LoginResultDto
 
     // Optional redirect URL for role-specific dashboard
     public string? RedirectUrl { get; set; }
+    public RoleAccessProfileDto? AccessProfile { get; set; }
     // Optional machine-readable error code to guide client behavior
     public string? ErrorCode { get; set; }
 }

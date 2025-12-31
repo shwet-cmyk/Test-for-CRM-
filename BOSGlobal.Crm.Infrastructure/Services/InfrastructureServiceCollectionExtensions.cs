@@ -3,6 +3,8 @@ using BOSGlobal.Crm.Infrastructure.Identity;
 using BOSGlobal.Crm.Infrastructure.Repositories;
 using BOSGlobal.Crm.Infrastructure.Services;
 using BOSGlobal.Crm.Infrastructure.Services.Initialization;
+using BOSGlobal.Crm.Infrastructure.Services.Messaging;
+using BOSGlobal.Crm.Infrastructure.Options;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +52,10 @@ public static class InfrastructureServiceCollectionExtensions
     // Use our custom claims principal factory so the session id stored on the user becomes part of the auth cookie
     services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationClaimsPrincipalFactory>();
     services.AddScoped<ILoginAuditRepository, LoginAuditRepository>();
+    services.AddScoped<IRoleAccessService, RoleAccessService>();
+    services.AddScoped<IDashboardService, DashboardService>();
+    services.AddScoped<IAttendanceService, AttendanceService>();
+    services.AddHostedService<AttendanceComplianceJob>();
 
         services.AddMemoryCache();
 
@@ -71,6 +77,21 @@ public static class InfrastructureServiceCollectionExtensions
         // reCAPTCHA verification service
         services.AddHttpClient<IRecaptchaService, RecaptchaService>();
         services.AddScoped<DbInitializer>();
+        if (configuration != null)
+        {
+            services.Configure<SecurityGatewayOptions>(configuration.GetSection("SecurityGateway"));
+        }
+        else
+        {
+            services.Configure<SecurityGatewayOptions>(_ => { });
+        }
+        services.AddHttpClient(nameof(SecurityGatewayService));
+        services.AddSingleton<IMessagingProvider, MockMessagingProvider>();
+        services.AddSingleton<IMessagingProvider, TwilioMessagingProvider>();
+        services.AddSingleton<IMessagingProvider, KaleyraMessagingProvider>();
+        services.AddSingleton<IMessagingProvider, NexgMessagingProvider>();
+        services.AddSingleton<IProviderRouter, ProviderRouter>();
+        services.AddScoped<ISecurityGatewayService, SecurityGatewayService>();
 
         return services;
     }
