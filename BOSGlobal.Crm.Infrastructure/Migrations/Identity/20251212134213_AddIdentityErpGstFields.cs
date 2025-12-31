@@ -10,8 +10,13 @@ namespace BOSGlobal.Crm.Infrastructure.Migrations.Identity
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "IdentityRole");
+            // Drop only if it exists (prevents crash on fresh DBs)
+            migrationBuilder.Sql(@"
+IF OBJECT_ID(N'[dbo].[IdentityRole]', N'U') IS NOT NULL
+BEGIN
+    DROP TABLE [dbo].[IdentityRole];
+END
+");
 
             migrationBuilder.AlterColumn<bool>(
                 name: "IsActive",
@@ -55,21 +60,17 @@ namespace BOSGlobal.Crm.Infrastructure.Migrations.Identity
                 oldClrType: typeof(bool),
                 oldType: "bit");
 
-            migrationBuilder.CreateTable(
-                name: "IdentityRole",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK_IdentityRole_AspNetRoles_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            // Recreate only if missing (prevents crash on rollbacks)
+            migrationBuilder.Sql(@"
+IF OBJECT_ID(N'[dbo].[IdentityRole]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[IdentityRole] (
+        [Id] nvarchar(450) NULL,
+        CONSTRAINT [FK_IdentityRole_AspNetRoles_Id] FOREIGN KEY ([Id])
+            REFERENCES [dbo].[AspNetRoles] ([Id]) ON DELETE CASCADE
+    );
+END
+");
         }
     }
 }
